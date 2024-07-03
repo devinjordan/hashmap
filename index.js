@@ -15,18 +15,10 @@ test.set('jacket', 'blue')
 test.set('kite', 'pink')
 test.set('lion', 'golden')
 
-// console.log(test.has('ice cream')); // true
-// console.log(test.has('hat')); // true
-// console.log(test.has('zebra')); // false
+// cause hashmap to grow
+test.set('moon', 'silver');
 
-// console.log(test.get('jacket')); // blue
-// console.log(test.get('hat')); // black
-// console.log(test.get('zebra')); // null
+// overwrite
+test.set('apple', 'green');
 
-// console.log(test.remove('ice cream')); // true
-// console.log(test.remove('lion')); // true
-// console.log(test.remove('zebra')); // false
-
-console.log(test.values()); // 12
-test.clear();
-console.log(test.values());
+console.log(test.buckets);

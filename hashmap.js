@@ -9,7 +9,7 @@ class Node {
 export default class Hashmap {
   constructor() {
     this.buckets = new Array(16).fill(null);
-    this.loadFactor = 0.8;
+    this.loadFactor = 0.75;
     this.capacity = this.buckets.length;
     this.occupied = 0;
   }
@@ -26,9 +26,22 @@ export default class Hashmap {
   } 
  
   set(key, value) {
-    const bucket = this.hash(key);
+    let bucket = this.hash(key);
     
     if (!this.has(key)) {
+      if ((this.length() + 1) / this.capacity > this.loadFactor) {
+        const entries = this.entries();
+
+        this.clear();
+        this.buckets = new Array(this.capacity * 2).fill(null);
+        this.capacity = this.buckets.length;
+        
+        for (let i = 0; i < entries.length; i++) {
+          this.set(entries[i][0], entries[i][1]);
+        };
+        bucket = this.hash(key);
+      };
+
       // bucket is empty
       if (this.buckets[bucket] == null) {
         const node = new Node(key, value);
@@ -48,6 +61,7 @@ export default class Hashmap {
       // overwrite
       this.buckets[bucket].value = value;
     };
+    
   };
 
   get(key) {
@@ -82,6 +96,7 @@ export default class Hashmap {
     if (curr == null) return false;
     else if (curr.next == null) {
       this.buckets[bucket] = null;
+      this.occupied--;
       return true;
     } else {
       while (curr.key != key && curr.next != null) {
@@ -91,6 +106,7 @@ export default class Hashmap {
       if (curr.key == key) {
         prev.next = null;
         curr = null;
+        this.occupied--;
         return true;
       } else return false;
     }
@@ -129,6 +145,7 @@ export default class Hashmap {
         this.buckets[i] = null;
       }
     }
+    this.occupied = 0;
   }
 
   keys() {
@@ -165,4 +182,21 @@ export default class Hashmap {
     return values;
   }
 
+  entries() {
+    let entries = [];
+    for (let i = 0; i < this.buckets.length; i++) {
+      if (this.buckets[i] == null) continue;
+      else {
+        let temp = this.buckets[i];
+        while (temp != null) {
+          let keyValuePair = [];
+          keyValuePair.push(temp.key);
+          keyValuePair.push(temp.value);
+          entries.push(keyValuePair);
+          temp = temp.next;
+        }
+      }
+    }
+    return entries;
+  }
 }
