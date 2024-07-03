@@ -112,4 +112,57 @@ export default class Hashmap {
     } 
     return length;
   }
+
+  clear() {
+    for (let i = 0; i < this.buckets.length; i++) {
+      if (this.buckets[i] == null) continue;
+      else {
+        function clearBucket(bucket) {
+          if (bucket == null) {
+            return;
+          } else {
+            clearBucket(bucket.next);
+            bucket.next = null;
+          }
+        };
+        clearBucket(this.buckets[i]);
+        this.buckets[i] = null;
+      }
+    }
+  }
+
+  keys() {
+    let keys = [];
+    for (let i = 0; i < this.buckets.length; i++) {
+      if (this.buckets[i] == null) continue;
+      else if (this.buckets[i].next == null) {
+        keys.push(this.buckets[i].key);
+      } else {
+        let temp = this.buckets[i];
+        while (temp != null) {
+          keys.push(temp.key);
+          temp = temp.next;
+        }
+      }
+    } 
+    return keys;
+  }
+
+  values() {
+    let values = [];
+    for (let i = 0; i < this.buckets.length; i++) {
+      if (this.buckets[i] == null) continue;
+      else if (this.buckets[i].next == null) {
+        values.push(this.buckets[i].value);
+      } else {
+        let temp = this.buckets[i];
+        while (temp != null) {
+          values.push(temp.value);
+          temp = temp.next;
+        }
+      }
+    } 
+    return values;
+  }
+
 }

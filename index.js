@@ -27,4 +27,6 @@ test.set('lion', 'golden')
 // console.log(test.remove('lion')); // true
 // console.log(test.remove('zebra')); // false
 
-console.log(test.length()); // 12
+console.log(test.values()); // 12
+test.clear();
+console.log(test.values());
