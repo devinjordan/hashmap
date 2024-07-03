@@ -15,10 +15,16 @@ test.set('jacket', 'blue')
 test.set('kite', 'pink')
 test.set('lion', 'golden')
 
-console.log(test.has('ice cream')); // true
-console.log(test.has('hat')); // true
-console.log(test.has('zebra')); // false
+// console.log(test.has('ice cream')); // true
+// console.log(test.has('hat')); // true
+// console.log(test.has('zebra')); // false
 
-console.log(test.get('jacket')); // blue
-console.log(test.get('hat')); // black
-console.log(test.get('zebra')); // null
+// console.log(test.get('jacket')); // blue
+// console.log(test.get('hat')); // black
+// console.log(test.get('zebra')); // null
+
+// console.log(test.remove('ice cream')); // true
+// console.log(test.remove('lion')); // true
+// console.log(test.remove('zebra')); // false
+
+console.log(test.length()); // 12

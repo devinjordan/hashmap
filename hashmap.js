@@ -46,7 +46,7 @@ export default class Hashmap {
 
     } else {
       // overwrite
-      this.buckets[bucket] = new Node(key, value);
+      this.buckets[bucket].value = value;
     };
   };
 
@@ -76,6 +76,40 @@ export default class Hashmap {
   };
 
   remove(key) {
-    
+    const bucket = this.hash(key);
+    let curr = this.buckets[bucket];
+    let prev = null;
+    if (curr == null) return false;
+    else if (curr.next == null) {
+      this.buckets[bucket] = null;
+      return true;
+    } else {
+      while (curr.key != key && curr.next != null) {
+        prev = curr;
+        curr = curr.next;
+      }
+      if (curr.key == key) {
+        prev.next = null;
+        curr = null;
+        return true;
+      } else return false;
+    }
+  }
+
+  length() {
+    let length = 0;
+    for (let i = 0; i < this.buckets.length; i++) {
+      if (this.buckets[i] == null) continue;
+      else if (this.buckets[i].next == null) {
+        length++;
+      } else {
+        let temp = this.buckets[i];
+        while (temp != null) {
+          length++;
+          temp = temp.next;
+        }
+      }
+    } 
+    return length;
   }
 }
